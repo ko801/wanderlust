@@ -90,11 +90,12 @@ app.use("/",userRouter);
 
 app.get("/listings/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const listing = await Listing.findById(id).populate("reviews");
+    const listing = await Listing.findById(id).populate("reviews").populate("owner");
     if(!listing){
      req.flash("error"," listing you requested does not exist!");
      res.redirect("/listings");
     }
+    console.log(listing);
     res.render("listings/show", { listing });
 }));
 
