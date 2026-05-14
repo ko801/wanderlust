@@ -33,7 +33,7 @@ platform built with Node.js, Express, EJS and MongoDB.
 2. Run npm install
 3. Create a .env file and add your MongoDB URL
 4. Run node app.js
-5. Open http://localhost:8080 in your browser
+   
 
 ## Developer
 Made by Komal Yadav
