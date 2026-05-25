@@ -54,10 +54,11 @@ module.exports.editListing=async (req, res) => {
             return res.redirect(`/listings/${id}`);
         }
 
-        res.render("listings/edit", { listing });
+        let origimalImageUrl=listing.image.url;
+       origimalImageUrl= origimalImageUrl.replace("/upload","/upload/h_300,w_250")
+        res.render("listings/edit", { listing ,origimalImageUrl});
 };
 // update ROUTE
-
 
 module.exports.updateListing=async (req, res) => {
 
