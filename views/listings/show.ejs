@@ -195,11 +195,12 @@
     <% } %>
 
         <!-- ALL REVIEWS -->
-        <p>
+        
+        <div class="row">
+            <p>
             <b>All Reviews</b>
         </p>
 
-        <div class="row">
 
             <% for(let review of listing.reviews){ %>
 
@@ -251,7 +252,13 @@
             <% } %>
 
         </div>
+    
 
     </div>
+    <div class="col-6 offset-3 mb-3">
+            <h3>where you'll be</h3>
+            <div id="map"></div>
+
+        </div>
 
 </div>
