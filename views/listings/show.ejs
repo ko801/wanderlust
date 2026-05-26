@@ -80,10 +80,9 @@
     <br><br>
 
     <!-- REVIEW FORM -->
-    <% if(currUser){ %>
 
     <div class="col-8 offset-3 mb-3">
-
+         <% if(currUser){ %>
         <hr>
 
         <h4>Leave a Review</h4>
@@ -194,7 +193,7 @@
 
     <% } %>
 
-        <!-- ALL REVIEWS -->
+       <% if(listing.reviews.length>0){%>
         
         <div class="row">
             <p>
@@ -252,13 +251,7 @@
             <% } %>
 
         </div>
-    
 
     </div>
-    <div class="col-6 offset-3 mb-3">
-            <h3>where you'll be</h3>
-            <div id="map"></div>
-
-        </div>
-
+    <% } %>
 </div>
