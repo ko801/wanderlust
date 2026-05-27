@@ -1,9 +1,5 @@
-const dotenv = require("dotenv");
 
-dotenv.config();
-
-console.log(process.env.SECRET);
-
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -32,6 +28,7 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
 app.use(flash());
+console.log("OPEN CAGE:", process.env.OPENCAGE_API_KEY);
 
 app.listen(port, () => {
     console.log("app is listening");

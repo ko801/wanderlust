@@ -1,56 +1,50 @@
 const Listing=require("../models/listing");
+
 module.exports.index=async (req, res) => {
-
         const allListings = await Listing.find({});
-
         res.render("listings/index", { allListings });
 };
 
 module.exports.renderNewForm=(req, res) => {
-
         res.render("listings/new.ejs");
 };
+
 // show ROUTE
-
-
 module.exports.showListing= async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id).populate({path:"reviews",populate:{path:"author"},}).populate("owner");
     if(!listing){
      req.flash("error"," listing you requested does not exist!");
-     res.redirect("/listings");
+     return res.redirect("/listings");  // FIX 1: added return so it stops here
     }
     res.render("listings/show", { listing });
 };
 
 // create ROUTE
-
-
 module.exports.createListing = async (req, res) => {
     let url = req.file.path;
     let filename = req.file.filename;
     const newListing=new Listing(req.body.listing);
     newListing.owner=req.user._id;
     newListing.image={url,filename};
+    // FIX 2: save default geometry so map doesn't crash
+    newListing.geometry = {
+        type: "Point",
+        coordinates: [77.2090, 28.6139],  // default: Delhi [lng, lat]
+    };
     await newListing.save();
     req.flash("success", "New Listing Created!");
     res.redirect("/listings");
 };
 
 // edit ROUTE
-
-
 module.exports.editListing=async (req, res) => {
-
         const { id } = req.params;
-
         const listing = await Listing.findById(id);
 
         // owner check
         if (!listing.owner.equals(res.locals.currUser._id)) {
-
             req.flash("error", "You are not the owner of this");
-
             return res.redirect(`/listings/${id}`);
         }
 
@@ -58,12 +52,10 @@ module.exports.editListing=async (req, res) => {
        origimalImageUrl= origimalImageUrl.replace("/upload","/upload/h_300,w_250")
         res.render("listings/edit", { listing ,origimalImageUrl});
 };
+
 // update ROUTE
-
 module.exports.updateListing=async (req, res) => {
-
         const { id } = req.params;
-
       let listing=  await Listing.findByIdAndUpdate(id, {
             ...req.body.listing,
         });
@@ -74,12 +66,10 @@ module.exports.updateListing=async (req, res) => {
     await listing.save();
         }
         req.flash("success", "Listing Updated!");
-
         res.redirect(`/listings/${id}`);
 };
 
 // DELETE ROUTE
-
 module.exports.deleteListing= async (req, res) => {
         const { id } = req.params;
         await Listing.findByIdAndDelete(id);

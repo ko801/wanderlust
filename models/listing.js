@@ -23,6 +23,17 @@ const listingSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:"User",
     },
+    geometry: {
+        type: {
+            type: String,
+            enum: ["Point"],
+            default: "Point",
+        },
+        coordinates: {
+            type: [Number],
+            default: [77.2090, 28.6139],  // default: Delhi [longitude, latitude]
+        },
+    },
 });
 listingSchema.post("findOneAndDelete",async(listing)=>{
     if(listing){

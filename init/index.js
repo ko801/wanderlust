@@ -15,16 +15,17 @@ async function main() {
 }
 
 const initDB = async () => {
-   // purana data delete
+
+   // delete old listings
    await Listing.deleteMany({});
 
-   // owner add karna har listing me
+   // add owner to every listing
    const sampleData = initData.data.map((obj) => ({
       ...obj,
-      owner: "69fc6367a0b8242a97da23fc",
+      owner: "6a1691427232e9cb2a548712",
    }));
 
-   // database me insert
+   // insert into DB
    await Listing.insertMany(sampleData);
 
    console.log("Database initialized successfully");
