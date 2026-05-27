@@ -1,3 +1,5 @@
+
+const axios = require("axios");
 const Listing=require("../models/listing");
 
 module.exports.index=async (req, res) => {
@@ -22,21 +24,51 @@ module.exports.showListing= async (req, res) => {
 
 // create ROUTE
 module.exports.createListing = async (req, res) => {
+
     let url = req.file.path;
     let filename = req.file.filename;
-    const newListing=new Listing(req.body.listing);
-    newListing.owner=req.user._id;
-    newListing.image={url,filename};
-    // FIX 2: save default geometry so map doesn't crash
-    newListing.geometry = {
-        type: "Point",
-        coordinates: [77.2090, 28.6139],  // default: Delhi [lng, lat]
-    };
+
+    // get location from form
+    let location = req.body.listing.location;
+
+    // convert location -> coordinates
+    const response = await axios.get(
+        "https://nominatim.openstreetmap.org/search",
+        {
+            params: {
+                q: location,
+                format: "json",
+                limit: 1,
+            },
+            headers: {
+                "User-Agent": "wanderlust-app",
+            },
+        }
+    );
+
+    const data = response.data[0];
+
+    const newListing = new Listing(req.body.listing);
+
+    newListing.owner = req.user._id;
+    newListing.image = { url, filename };
+
+    // dynamic coordinates
+    if (data) {
+        newListing.geometry = {
+            type: "Point",
+            coordinates: [
+                parseFloat(data.lon),
+                parseFloat(data.lat),
+            ],
+        };
+    }
+
     await newListing.save();
+
     req.flash("success", "New Listing Created!");
     res.redirect("/listings");
 };
-
 // edit ROUTE
 module.exports.editListing=async (req, res) => {
         const { id } = req.params;
