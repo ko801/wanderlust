@@ -14,7 +14,6 @@ body {
 .navbar {
     height: 5rem;
     background-color: white;
-
 }
 
 .fa-compass {
@@ -29,15 +28,12 @@ body {
 /* Footer */
 
 .f-info-links a {
-
     text-decoration: none;
     color: #222222;
-
 }
 
 .f-info-links a:hover {
     text-decoration: underline;
-
 }
 
 .f-info-links,
@@ -56,27 +52,28 @@ body {
 
 .f-info {
     display: flex;
-    height: 8rem;
+    min-height: 8rem;
     background-color: #ebebeb;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: space-evenly;
+    align-items: center;
     text-align: center;
+    padding: 1rem;
 }
 
 /* cards */
+
 .listing-card {
     border: none !important;
     margin-bottom: 2rem;
-
+    transition: 0.3s ease;
 }
 
 .card-img-top {
-
     border-radius: 1rem !important;
     width: 100% !important;
     object-fit: cover !important;
-
+    height: 20rem;
 }
 
 .card-body {
@@ -85,14 +82,15 @@ body {
 
 .card-text p {
     font-weight: 400 !important;
-
 }
 
 .listing-link {
     text-decoration: none;
+    color: #222222;
 }
 
 /* card Effect */
+
 .card-img-overlay {
     opacity: 0;
 }
@@ -101,6 +99,8 @@ body {
     opacity: 0.2;
     background-color: white;
 }
+
+/* Buttons */
 
 .add-btn {
     background-color: #fe424d !important;
@@ -111,14 +111,135 @@ body {
 
 .show-img {
     height: 30vh;
-
+    object-fit: cover;
 }
 
 .btns {
     display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .show-card {
     padding-left: 0;
     padding-right: 0;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+/* Tablets */
+
+@media (max-width: 992px) {
+
+    .listing-card {
+        width: 100% !important;
+    }
+
+    .card-img-top {
+        height: 18rem;
+    }
+
+    .show-card {
+        width: 100% !important;
+    }
+
+    .btns {
+        justify-content: center;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    /* Navbar */
+
+    .navbar {
+        height: auto;
+        padding: 1rem;
+    }
+
+    .fa-compass {
+        font-size: 1.7rem;
+    }
+
+    /* Footer */
+
+    .f-info {
+        padding: 1rem 0.5rem;
+        gap: 0.5rem;
+    }
+
+    .f-info-socials i {
+        font-size: 1rem;
+        margin-right: 0.5rem;
+    }
+
+    /* Cards */
+
+    .listing-card {
+        width: 100% !important;
+        margin: auto;
+    }
+
+    .card-img-top {
+        height: 16rem;
+    }
+
+    .card-body {
+        padding-top: 0.5rem !important;
+    }
+
+    /* Show Page */
+
+    .show-img {
+        height: 25vh;
+    }
+
+    .show-card {
+        width: 100% !important;
+        margin: auto !important;
+    }
+
+    .btns {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btns a,
+    .btns button {
+        width: 100%;
+    }
+}
+
+/* Small Phones */
+
+@media (max-width: 480px) {
+
+    .container {
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+    }
+
+    .card-img-top {
+        height: 14rem;
+    }
+
+    .show-img {
+        height: 22vh;
+    }
+
+    .fa-compass {
+        font-size: 1.5rem;
+    }
+
+    .nav-link {
+        font-size: 0.9rem;
+    }
+
+    .f-info {
+        font-size: 0.9rem;
+    }
 }

@@ -115,3 +115,35 @@ module.exports.deleteListing= async (req, res) => {
         req.flash("success", "Listing Deleted!");
         res.redirect("/listings");
 };
+
+module.exports.searchListings = async (req, res) => {
+
+    let { q } = req.query;
+
+    // empty search
+    if (!q || q.trim() === "") {
+        req.flash("error", "Please enter a location");
+        return res.redirect("/listings");
+    }
+
+    q = q.trim();
+
+    // search by location only
+    const allListings = await Listing.find({
+        location: {
+            $regex: q,
+            $options: "i",
+        },
+    });
+
+    // no listings found
+    if (allListings.length === 0) {
+        req.flash("error", "No listings found for this location");
+        return res.redirect("/listings");
+    }
+
+    res.render("listings/index", {
+        allListings,
+        currCategory: null,
+    });
+};

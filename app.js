@@ -1,5 +1,9 @@
+const dotenv = require("dotenv");
 
-require("dotenv").config();
+dotenv.config();
+
+console.log(process.env.SECRET);
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -28,7 +32,6 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
 app.use(flash());
-console.log("OPEN CAGE:", process.env.OPENCAGE_API_KEY);
 
 app.listen(port, () => {
     console.log("app is listening");
@@ -72,18 +75,6 @@ app.use((req,res,next)=>{
    res.locals.currUser=req.user; 
     next();
 });
-
-// app.get("/demouser", async (req, res) => {
-//     let fakeuser = new User({
-//         email: "stu@gmail.com",
-//         username: "aarya@123"
-//     });
-
-//     const reguser = await User.register(fakeuser, "password");
-
-//     console.log(fakeuser);
-//     res.send(reguser);
-// });
 
 app.use("/listings",listingsRouter);
 app.use("/listings",reviewsRouter);

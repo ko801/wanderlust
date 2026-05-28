@@ -21,7 +21,62 @@
 border-radius: 25px;
 padding: 0.5rem 3rem 0.5rem 3rem;
 font-size: 0.9rem;
+  } 
+  /* RESPONSIVE NAVBAR */
+
+@media (max-width: 992px) {
+
+  .navbar-nav-input {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 1rem;
   }
+
+  .navbar-nav-input form {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .search-btn {
+    width: 100%;
+    padding: 0.7rem 1rem;
+  }
+
+  .navbar-nav.ms-auto {
+    margin-top: 1rem;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.5rem 0;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .navbar {
+    padding: 0.7rem 1rem;
+  }
+
+  .fa-compass {
+    font-size: 1.7rem;
+  }
+
+  .search-input {
+    font-size: 0.85rem;
+    padding: 0.65rem 1rem;
+  }
+
+  .search-btn {
+    font-size: 0.9rem;
+  }
+}
 </style>
 
 <nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top">
@@ -35,11 +90,11 @@ font-size: 0.9rem;
         <a class="nav-link" href="/listings">Explore</a>
       </div>
       <div class="navbar-nav-input">
-        <form class="d-flex" role="search">
-      <input class="form-control me-2 search-input" type="search" placeholder="Search destinations" />
-      <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-    </form>
-
+  
+        <form class="d-flex" role="search" action="/listings/search" method="GET">
+          <input class="form-control me-2 search-input" type="search" name="q" placeholder="Search destinations" />
+          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+        </form>
       </div>
 
       <div class="navbar-nav ms-auto">
