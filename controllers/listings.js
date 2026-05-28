@@ -1,10 +1,16 @@
-
 const axios = require("axios");
 const Listing=require("../models/listing");
 
+// index ROUTE — with category filter
 module.exports.index=async (req, res) => {
-        const allListings = await Listing.find({});
-        res.render("listings/index", { allListings });
+    const { category } = req.query;
+    let allListings;
+    if (category) {
+        allListings = await Listing.find({ category });
+    } else {
+        allListings = await Listing.find({});
+    }
+    res.render("listings/index", { allListings, currCategory: category || null });
 };
 
 module.exports.renderNewForm=(req, res) => {
@@ -17,7 +23,7 @@ module.exports.showListing= async (req, res) => {
     const listing = await Listing.findById(id).populate({path:"reviews",populate:{path:"author"},}).populate("owner");
     if(!listing){
      req.flash("error"," listing you requested does not exist!");
-     return res.redirect("/listings");  // FIX 1: added return so it stops here
+     return res.redirect("/listings");
     }
     res.render("listings/show", { listing });
 };
@@ -69,6 +75,7 @@ module.exports.createListing = async (req, res) => {
     req.flash("success", "New Listing Created!");
     res.redirect("/listings");
 };
+
 // edit ROUTE
 module.exports.editListing=async (req, res) => {
         const { id } = req.params;

@@ -14,6 +14,11 @@ const listingSchema = new Schema({
     price: Number,
     location: String,
     country: String,
+    category: {
+        type: String,
+        enum: ["Trending", "Rooms", "Iconic cities", "Mountains", "Castles", "Pool side", "Camping", "Farm", "Artic", "Domes", "Boats"],
+        default: "Trending",
+    },
     reviews:[{
         type:Schema.Types.ObjectId,
         ref:"Review",
@@ -31,7 +36,7 @@ const listingSchema = new Schema({
         },
         coordinates: {
             type: [Number],
-            default: [77.2090, 28.6139],  // default: Delhi [longitude, latitude]
+            default: [77.2090, 28.6139],
         },
     },
 });
