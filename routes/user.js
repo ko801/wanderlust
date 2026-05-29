@@ -26,7 +26,7 @@ userController.logIn
 );
 
 
-// ================= LOGOUT =================
+
 
 router.get("/logout",userController.logOut );
 
