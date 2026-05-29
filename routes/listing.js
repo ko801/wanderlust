@@ -10,7 +10,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 
 const {
     isLoggedIn,
-    isOwner,
+  isOwner,
     validateListing,
 } = require("../middleware.js");
 
@@ -72,7 +72,7 @@ router
 );
 
 
-// EDIT ROUTE
+
 router.get(
     "/:id/edit",
     isLoggedIn,
