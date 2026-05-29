@@ -1,7 +1,7 @@
 const axios = require("axios");
 const Listing=require("../models/listing");
 
-// index ROUTE — with category filter
+
 module.exports.index=async (req, res) => {
     const { category } = req.query;
     let allListings;
@@ -34,7 +34,7 @@ module.exports.createListing = async (req, res) => {
     let url = req.file.path;
     let filename = req.file.filename;
 
-    // get location from form
+    
     let location = req.body.listing.location;
 
     // convert location -> coordinates
