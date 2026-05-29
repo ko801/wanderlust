@@ -13,7 +13,7 @@ const reviewController=require("../controllers/reviews.js");
 
 const { isLoggedIn,isReviewAuthor } = require("../middleware.js");
 
-// REVIEW VALIDATION
+
 const validateReview = (req, res, next) => {
 
     let { error } = reviewSchema.validate(req.body);
@@ -31,7 +31,7 @@ const validateReview = (req, res, next) => {
 };
 
 
-// CREATE REVIEW ROUTE
+
 router.post(
     "/:id/reviews",
     isLoggedIn,
@@ -39,7 +39,6 @@ router.post(
 wrapAsync(reviewController.createReview)
 );
 
-// DELETE REVIEW ROUTE
 router.delete(
     "/:id/reviews/:reviewId",
 isLoggedIn,
