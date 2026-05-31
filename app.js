@@ -83,11 +83,10 @@ app.use((req,res,next)=>{
     next();
 });
 
+
 app.use("/listings", listingsRouter);
 app.use("/listings", reviewsRouter);
 app.use("/", userRouter);
-
-// ✅ YAHI EK LINE ADD KI HAI
 app.get("/", (req, res) => {
     res.redirect("/listings");
 });
