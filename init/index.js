@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
 const axios = require("axios");
+const dotenv = require("dotenv");
+const path = require("path");
+
+dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
+
+const dbUrl = process.env.ATLASDB_URL;
 
 main()
   .then(() => {
@@ -13,19 +19,16 @@ main()
   });
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
+  await mongoose.connect(dbUrl);
 }
 
 const initDB = async () => {
-
   // delete old listings
   await Listing.deleteMany({});
 
   // create listings with geometry
   const sampleData = await Promise.all(
     initData.data.map(async (obj) => {
-
-      // get coordinates from location
       const response = await axios.get(
         "https://nominatim.openstreetmap.org/search",
         {
@@ -45,7 +48,6 @@ const initDB = async () => {
       return {
         ...obj,
         owner: "6a1691427232e9cb2a548712",
-
         geometry: data
           ? {
               type: "Point",
@@ -54,15 +56,20 @@ const initDB = async () => {
                 parseFloat(data.lat),
               ],
             }
-          : undefined,
+          : {
+              type: "Point",
+              coordinates: [0, 0],
+            },
       };
     })
   );
 
-  // insert into DB
   await Listing.insertMany(sampleData);
 
   console.log("Database initialized successfully");
+  mongoose.connection.close();
 };
 
-initDB();
+main()
+  .then(() => initDB())
+  .catch((err) => console.log(err));
