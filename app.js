@@ -1,7 +1,6 @@
 const dotenv = require("dotenv");
 const path = require("path");
 dotenv.config({path: path.join(__dirname, ".env")});
-console.log(process.env.SECRET);
 
 const express = require("express");
 const app = express();
@@ -35,7 +34,7 @@ app.use(flash());
 
 async function main() {
     await mongoose.connect(dbUrl);
-    console.log("✅ DB Connected!");
+    console.log(" DB Connected!");
     app.listen(port, () => {
         console.log("app is listening on port", port);
     });
