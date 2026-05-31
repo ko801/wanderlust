@@ -6,7 +6,7 @@ console.log(process.env.SECRET);
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 const methodOverride = require("method-override");
 const Listing = require("./models/listing.js");
@@ -87,6 +87,7 @@ app.use((req,res,next)=>{
 app.use("/listings", listingsRouter);
 app.use("/listings", reviewsRouter);
 app.use("/", userRouter);
+
 app.get("/", (req, res) => {
     res.redirect("/listings");
 });
