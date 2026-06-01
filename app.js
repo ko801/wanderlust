@@ -24,10 +24,9 @@ const userRouter = require("./routes/user.js");
 
 const dbUrl = process.env.ATLASDB_URL;
 
-
-app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
@@ -69,8 +68,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
@@ -78,16 +75,18 @@ app.use((req, res, next) => {
     next();
 });
 
-
 app.get("/", (req, res) => {
     res.redirect("/listings");
 });
 
+
 app.use("/listings", listingsRouter);
-app.use("/listings/:id/reviews", reviewsRouter);
+
+
+app.use("/listings", reviewsRouter);
+
 
 app.use("/", userRouter);
-
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
@@ -99,13 +98,19 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("error.ejs", { message });
 });
 
-async function main() {
-    await mongoose.connect(dbUrl);
-    console.log("DB Connected!");
 
-    app.listen(port, () => {
-        console.log("Server running on port", port);
-    });
+async function main() {
+    try {
+        await mongoose.connect(dbUrl);
+        console.log("DB Connected!");
+
+        app.listen(port, () => {
+            console.log("Server running on port", port);
+        });
+
+    } catch (err) {
+        console.log("DB Connection Error:", err);
+    }
 }
 
-main().catch((err) => console.log(err));
+main();
