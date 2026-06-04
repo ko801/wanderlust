@@ -12,14 +12,12 @@ module.exports.createReview=async (req, res) => {
         }
 
         let newReview = new Review(req.body.review);
-
-        // ADD AUTHOR
         newReview.author = req.user._id;
 
-        // PUSH REVIEW
+    
         listing.reviews.push(newReview);
 
-        // SAVE
+       
         await newReview.save();
         await listing.save();
 
